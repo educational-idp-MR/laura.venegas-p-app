@@ -174,6 +174,8 @@ name, que identifica el executor que completó las tareas.
 **Captura de pantalla del dashboard:**
 
 > _[Inserta aquí la imagen del dashboard con los 4 paneles]_
+![alt text](image-1.png)
+![alt text](image-2.png)
 
 ### 2.1.2. Visualizaciónes Adicionales (Con las metricas actuales)
 
@@ -181,19 +183,25 @@ name, que identifica el executor que completó las tareas.
 
 **Propósito:**
 ```
-¿Qué quieres analizar o mostrar? Menciona qué métrica(s) vas a usar
+¿Qué quieres analizar o mostrar? Menciona qué métrica(s) vas a usar  
 
+Analizar qué códigos de respuesta HTTP devuelve la aplicación (200, 404, 500, etc.), para entender el comportamiento general de las respuestas del servidor.
+
+Esto ayuda a detectar rápidamente si aumentan respuestas 404, 500 u otros códigos inesperados.
 
 ```
 
 **Título del panel:**
 ```
-
+Distribución de respuestas HTTP
 ```
 
 **Consulta (PromQL o LogQL):**
 ```
-Consejo: Si usaste la interfaz de Grafana para crear el panel, puedes copiar la consulta que se muestra en la caja de texto de la seccion Code.
+Consejo: Si usaste la interfaz de Grafana para crear el panel, puedes copiar la consulta que se muestra en la caja de texto de la seccion Code.  
+
+En PromQL:
+sum by(status) (rate(http_server_requests_seconds_count{applicationName="laura-venegas-p-app-monitoring"}[1m]))
 
 ```
 
@@ -203,23 +211,23 @@ Consejo: Si usaste la interfaz de Grafana para crear el panel, puedes copiar la 
 - [ ] Bar chart
 - [ ] Stat
 - [ ] Logs
-- [ ] Otro: _____
+- [ x ] Otro: Bar Chart
 
 **Otros ajustes aplicados (colores, unidades, etc.) (opcional):**
 ```
-
+Unit milliseconds (ms)
 
 ```
 
 **Captura de pantalla:**
 
 > _[Inserta aquí la imagen del panel]_
+![alt text](image-3.png)
 
 **Análisis (2-3 frases):**
 ```
 ¿Qué conclusiones o patrones observas?
-
-
+Este panel permite observar qué tipo de respuestas HTTP devuelve con mayor frecuencia la aplicación. En condiciones normales la mayoría de respuestas deberían ser 200, mientras que aumentos en 401 pueden indicar problemas en endpoints.
 
 ```
 
