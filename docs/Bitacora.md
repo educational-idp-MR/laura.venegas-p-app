@@ -46,10 +46,10 @@ No tuve ningún problema, las intrucciones fueron bastante claras y faciles de s
 
 **Endpoints probados:**
 
-- [ ] `GET /api/`
-- [ ] `POST /api/shorten`
-- [ ] `GET /api/{shortCode}`
-- [ ] `GET /api/urls`
+- [ x ] `GET /api/`
+- [ x ] `POST /api/shorten`
+- [ x ] `GET /api/{shortCode}`
+- [ x ] `GET /api/urls`
 
 
 ### 2.0.2. Análisis de dos métricas relevantes
@@ -58,39 +58,53 @@ No tuve ningún problema, las intrucciones fueron bastante claras y faciles de s
 
 **Nombre de la métrica:**  
 ```
-
+ http_server_requests_active_seconds_max gauge
 ```
 
 **Tipo de métrica:** 
 - [ ] Counter
-- [ ] Gauge 
+- [ x ] Gauge 
 - [ ] Histogram 
 - [ ] Summary
 
 **Descripción de qué información aporta:**
 ```
-
+Al ser de tipo gauge, el valor de este puede aumentar o disminuir dependiendo de la duración de las solicitudes activas.
+Esta métrica ayuda a identificar si existen  peticiones que están tardando demasiado en completarse.  
 
 
 ```
 
 **Relación con otras métricas (si aplica):**
 ```
-Ejemplo: Un aumento en peticiones HTTP podría influir en el uso de CPU
+Esta métrica se relaciona con otras métricas como:
+
+- http_server_requests_seconds_count: indica la cantidad de solicitudes HTTP.
+- http_server_requests_seconds_sum: muestra el tiempo total acumulado de todas las solicitudes.
+- process_cpu_usage o system_cpu_usage: un aumento en la duración de las solicitudes podría estar relacionado con un mayor uso de CPU.
+
+Por ejemplo, si el número de solicitudes HTTP aumenta, es posible que también aumente la duración máxima de las solicitudes debido a la carga del servidor.
 
 
 ```
 
 **¿En que escenarios puede ayudar esta métrica?**
 ```
-
+Esta métrica puede ayudar a: 
+- Monitorear el impacto de un alto tráfico en el tiempo de respuesta del servidor.
+- Identificar problemas de rendimiento en endpoints específicos.
+- Detectar solicitudes HTTP que tardan demasiado en procesarse.
 
 
 ```
 
 **¿Qué etiquetas (labels) se utilizan para agrupar los datos?**
 ```
-Ejemplo: uri, method, status, instance, job, etc.
+- exception 
+- method 
+- outcome 
+- status
+- uri 
 
 
 
@@ -102,39 +116,49 @@ Ejemplo: uri, method, status, instance, job, etc.
 
 **Nombre de la métrica:**  
 ```
-
+executor_completed_tasks_total counter
 ```
 
 **Tipo de métrica:** 
-- [ ] Counter
+- [ x ] Counter
 - [ ] Gauge 
 - [ ] Histogram 
 - [ ] Summary
 
 **Descripción de qué información aporta:**
 ```
+Esta métrica indica el número total de tareas que han sido completadas por un executor o pool de hilos dentro de la aplicación.
 
-
+Al ser de tipo counter, su valor solo puede aumentar con el tiempo, ya que cuenta la cantidad acumulada de tareas ejecutadas correctamente desde que la aplicación se inició.
 
 ```
 
 **Relación con otras métricas (si aplica):**
 ```
-Ejemplo: Un aumento en peticiones HTTP podría influir en el uso de CPU
+Esta métrica puede relacionarse con otras métricas del sistema como:
+
+- executor_active_threads: muestra cuántos hilos están activos ejecutando tareas.
+- executor_pool_size: indica el tamaño del pool de hilos.
+- process_cpu_usage: un aumento en las tareas completadas podría implicar mayor uso de CPU.
+
+Por ejemplo, si el número de tareas completadas aumenta rápidamente, puede indicar una mayor carga de trabajo en el sistema.
 
 
 ```
 
 **¿En que escenarios puede ayudar esta métrica?**
 ```
+Esta métrica puede ayudar a:
 
-
+- Monitorear la cantidad de tareas procesadas por el sistema.
+- Detectar si el executor está trabajando correctamente.
+- Identificar picos de carga en la aplicación.
 
 ```
 
 **¿Qué etiquetas (labels) se utilizan para agrupar los datos?**
 ```
-Ejemplo: uri, method, status, instance, job, etc.
+name, que identifica el executor que completó las tareas.
 
 
 
